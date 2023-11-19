@@ -1,4 +1,4 @@
-![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/115076652/d48a9111-ac5b-4765-9fc2-cb7adc635de0)# Jarkom-Modul-3-D28-2023
+# Jarkom-Modul-3-D28-2023
 
 Anggota Kelompok D28 :
 1. Revanantyo Dwigantara - 5025211113
@@ -395,14 +395,135 @@ service nginx restart
 ## No. 7
 Soal :
 
+`Aturlah agar Eisen dapat bekerja dengan maksimal, lalu lakukan testing dengan 1000 request dan 100 request/second.`
+
+Untuk melakukan itu, kita bisa mengatur pada Eisen (LB) dengan algoritma Weighted Round-Robin dan lakukan testing dengan 1000 requests dan 100 request/seconds.
+```
+ab -n 1000 -c 100 http://www.granz.channel.d28.com/
+```
+Lalu didapatkan hasil sebagai berikut:
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/52de657f-b4cb-461b-ac8d-161c1360ef2d)
+
+
 ## No. 8
 Soal :
+
+```
+Buatlah analisis hasil testing dengan 200 request dan 10 request/second masing-masing algoritma Load Balancer dengan ketentuan sebagai berikut:
+a. Nama Algoritma Load Balancer.
+b. Report hasil testing pada Apache Benchmark.
+c. Grafik request per second untuk masing masing algoritma. 
+d. Analisis.
+```
+
+a. Nama algoritma dan b. Report hasil testing.
+- Round-robin
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/19c2c9f9-33c8-49e2-bd39-cfb74896b2ce)
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/a3eca8a5-ec1e-4d3a-950f-0f564dfa188b)
+
+- Weighted Round-robin
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/08ea6140-4888-4e1e-9fc5-3f357967bd34)
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/f0787bfc-528c-4f45-8ed4-ed9e7a3eacba)
+
+- Least Connection
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/180a6eec-fb71-4390-b929-76e9df7e6e6f)
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/6dc2fbc9-6f69-4675-9493-888f3c495aef)
+
+- IP Hash
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/6aacc90b-bdac-4014-837f-f9a3aeab10fc)
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/c017ced1-e82c-49bd-8bb3-7abf5705628c)
+
+- Generic Hash
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/06f0739c-6cb7-4a89-bbcb-bf5165c3b2bc)
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/d46bbdeb-e6af-43e1-ac93-d14ec1dbd394)
+
+c. Grafik Request per seconds.
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/1fd0ad10-a75c-4789-a501-95c17acf5ef9)
+
+d. Analisis.
+
+Dari grafik bisa dilihat algoritma yang paling bagus adalah algoritma IP Hash. 
+Proses algoritma IP Hash dimulai ketika paket data tiba di jaringan. Algoritma hashing mengekstrak alamat IP sumber dan tujuan dari paket dan menggunakannya sebagai masukan. Ini kemudian menghasilkan nilai hash unik berdasarkan alamat IP ini. Nilai hash ini berfungsi sebagai pengenal kunci yang menentukan server mana dalam sekelompok server yang akan menangani paket tersebut. Keunggulan IP Hash terletak pada kemampuannya mendistribusikan beban jaringan secara merata secara konsisten. Dengan menetapkan setiap paket ke server berdasarkan nilai hash, hal ini memastikan bahwa tidak ada satu server pun yang kewalahan dengan lalu lintas. Hal ini sangat bermanfaat dalam lingkungan jaringan dengan lalu lintas tinggi di mana menjaga keseimbangan dan mencegah kelebihan beban server sangatlah penting.
 
 ## No. 9
 Soal :
 
+`
+Dengan menggunakan algoritma Round Robin, lakukan testing dengan menggunakan 3 worker, 2 worker, dan 1 worker sebanyak 100 request dengan 10 request/second, kemudian tambahkan grafiknya pada grimoire.
+`
+
+Testing dengan 3 worker:
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/ed374ec7-9056-40fd-8399-32f82dde094c)
+
+Testing dengan 2 worker:
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/52862c83-5226-4675-bb9c-c7ecf7582de1)
+
+Testing dengan 1 worker:
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/1c52befd-cc13-4fb4-afea-952425330186)
+
+Grafik testing:
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/ab28bac2-e146-4216-87ed-c0f5039a9728)
+
 ## No. 10
 Soal :
+
+`Tambahkan konfigurasi autentikasi di LB dengan dengan kombinasi username: “netics” dan password: “ajkyyy”, dengan yyy merupakan kode kelompok. Terakhir simpan file “htpasswd” nya di /etc/nginx/rahasisakita/`
+
+Untuk bisa melakukan ini kita perlu melakukan sedikit konfigurasi pada Eisen. 
+
+```
+mkdir /etc/nginx/rahasiakita
+
+htpasswd -b -c /etc/nginx/rahasiakita/.htpasswd netics ajkd28
+
+echo ' 
+# Default menggunakan Round Robin
+ upstream myweb  {
+ 	server 192.205.3.1:8001; 
+ 	server 192.205.3.2:8002; 
+	server 192.205.3.3:8003; 
+ }
+
+ server {
+ 	listen 80;
+ 	server_name granz.channel.d28.com;
+
+ 	location / {
+            proxy_pass http://myweb;
+            proxy_set_header    X-Real-IP $remote_addr;
+            proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header    Host $http_host;
+
+            auth_basic "Administrators Area";
+            auth_basic_user_file /etc/nginx/rahasiakita/.htpasswd;
+        }
+
+        location ~ /\.ht {
+            deny all;
+        }
+
+ }' > /etc/nginx/sites-available/lb-granz
+```
+Kita bisa menggunakan htpasswd untuk setting username menjadi netics dan password menjadi ajkd28. Setelah itu bisa mengikuti modul dan set nama servernya menjadi granz.channel.d28.com.
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/967252d7-67e3-4468-bf0f-86ed5893876c)
+
 
 ## No. 11
 Soal :
