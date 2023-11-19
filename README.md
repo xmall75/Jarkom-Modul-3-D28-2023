@@ -227,6 +227,7 @@ iface eth0 inet static
 
 ## No. 2
 Soal :
+
 `Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.16 - [prefix IP].3.32 dan [prefix IP].3.64 - [prefix IP].3.80`
 Kita bisa buat script pada node Himmel dengan isi konfigurasi sebagai berikut:
 ```
@@ -250,6 +251,7 @@ subnet 192.205.3.0 netmask 255.255.255.0 {
 
 ## No. 3
 Soal :
+
 `Client yang melalui Switch4 mendapatkan range IP dari [prefix IP].4.12 - [prefix IP].4.20 dan [prefix IP].4.160 - [prefix IP].4.168`
 
 Setelah itu kita atur untuk Client yang melalui Switch4.
@@ -268,6 +270,7 @@ subnet 192.205.4.0 netmask 255.255.255.0 {
 
 ## No. 4
 Soal :
+
 `Client mendapatkan DNS dari Heiter dan dapat terhubung dengan internet melalui DNS tersebut`
 
 Untuk melakukan ini, kita bisa mengatur `domain-name-servers` pada Himmel.
@@ -288,8 +291,47 @@ echo 'options {
 };' > /etc/bind/named.conf.options
 ```
 
+Testing pada Client Revolte:
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/04c3780e-483f-42b8-8195-0e338fbf0ce1)
+
+Testing internet pada Client Revolte:
+
+![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/e3b9cc38-d2cd-4e43-b756-1799f367a4ef)
+
 ## No. 5
 Soal :
+
+`Lama waktu DHCP server meminjamkan alamat IP kepada Client yang melalui Switch3 selama 3 menit sedangkan pada client yang melalui Switch4 selama 12 menit. Dengan waktu maksimal dialokasikan untuk peminjaman alamat IP selama 96 menit.`
+
+Untuk melakukan hal ini, kita bisa menambahkan `default-lease-time` yaitu waktu default dan `max-lease-time` yaitu waktu maksimal pada node Himmel. Untuk Switch3 kita atur sebagai berikut:
+```
+subnet 192.205.3.0 netmask 255.255.255.0 {
+    range 192.205.3.16 192.205.3.32;
+    range 192.205.3.64 192.205.3.80;
+    option routers 192.205.3.1;
+    option broadcast-address 192.205.3.255;
+    option domain-name-servers 192.205.1.2;
+    default-lease-time 180;
+    max-lease-time 5760;
+}
+```
+Dengan `default-lease-time` 180 secs yaitu 3 menit dan `max-lease-time` yaitu 5760 secs yaitu 96 menit.
+
+Untuk Switch4 kita atur sebagai berikut:
+```
+subnet 192.205.4.0 netmask 255.255.255.0 {
+    range 192.205.4.12 192.205.4.20;
+    range 192.205.4.160 192.205.4.168;
+    option routers 192.205.4.1;
+    option broadcast-address 192.205.4.255;
+    option domain-name-servers 192.205.1.2;
+    default-lease-time 720;
+    max-lease-time 5760;
+}
+```
+Dengan `default-lease-time` 720 secs yaitu 12 menit dan `max-lease-time' yaitu 5760 secs yaitu 96 menit.
+
 
 ## No. 6
 Soal :
