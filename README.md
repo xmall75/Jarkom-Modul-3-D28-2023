@@ -227,12 +227,71 @@ iface eth0 inet static
 
 ## No. 2
 Soal :
+```
+Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.16 - [prefix IP].3.32 dan [prefix IP].3.64 - [prefix IP].3.80
+```
+Kita bisa buat script pada node Himmel dengan isi konfigurasi sebagai berikut:
+```
+apt-get update -y
+apt-get install isc-dhcp-server -y
+
+echo ’
+INTERFACES="eth0"
+‘ >> /etc/default/isc-dhcp-server
+
+subnet 192.205.3.0 netmask 255.255.255.0 {
+    range 192.205.3.16 192.205.3.32;
+    range 192.205.3.64 192.205.3.80;
+    option routers 192.205.3.1;
+    option broadcast-address 192.205.3.255;
+    option domain-name-servers 192.205.1.2;
+    default-lease-time 180;
+    max-lease-time 5760;
+}
+```
 
 ## No. 3
 Soal :
+```
+Client yang melalui Switch4 mendapatkan range IP dari [prefix IP].4.12 - [prefix IP].4.20 dan [prefix IP].4.160 - [prefix IP].4.168
+```
+Setelah itu kita atur untuk Client yang melalui Switch4.
+```
+subnet 192.205.4.0 netmask 255.255.255.0 {
+    range 192.205.4.12 192.205.4.20;
+    range 192.205.4.160 192.205.4.168;
+    option routers 192.205.4.1;
+    option broadcast-address 192.205.4.255;
+    option domain-name-servers 192.205.1.2;
+    default-lease-time 720;
+    max-lease-time 5760;
+}
+‘ >> /etc/dhcp/dhcpd.conf
+```
 
 ## No. 4
 Soal :
+```
+Client mendapatkan DNS dari Heiter dan dapat terhubung dengan internet melalui DNS tersebut
+```
+
+Untuk melakukan ini, kita bisa mengatur `domain-name-servers` pada Himmel.
+```
+option domain-name-servers 192.205.1.2;
+```
+dan tambahkan forwarder pada Heiter.
+```
+echo 'options {
+	directory "/var/cache/bind";
+	forwarders {
+    		192.168.122.1;
+	};
+	allow-query{any;};
+	
+	auth-nxdomain no;
+	listen-on-v6 { any; };
+};' > /etc/bind/named.conf.options
+```
 
 ## No. 5
 Soal :
