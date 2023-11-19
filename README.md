@@ -231,6 +231,7 @@ iface eth0 inet static
 Soal :
 
 `Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.16 - [prefix IP].3.32 dan [prefix IP].3.64 - [prefix IP].3.80`
+
 Kita bisa buat script pada node Himmel dengan isi konfigurasi sebagai berikut:
 ```
 apt-get update -y
