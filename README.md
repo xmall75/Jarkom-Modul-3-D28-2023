@@ -80,7 +80,7 @@ echo 'options {
 ## No. 1
 Soal :
 
-```Lakukan konfigurasi sesuai dengan peta yang sudah diberikan dan semua CLIENT harus menggunakan konfigurasi dari DHCP Server```
+`Lakukan konfigurasi sesuai dengan peta yang sudah diberikan dan semua CLIENT harus menggunakan konfigurasi dari DHCP Server`
 
 ![image](https://github.com/xmall75/Jarkom-Modul-3-D28-2023/assets/34641833/6a4b15c6-ee8d-4eea-855c-c0979c9edfd2)
 
@@ -227,9 +227,7 @@ iface eth0 inet static
 
 ## No. 2
 Soal :
-```
-Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.16 - [prefix IP].3.32 dan [prefix IP].3.64 - [prefix IP].3.80
-```
+`Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.16 - [prefix IP].3.32 dan [prefix IP].3.64 - [prefix IP].3.80`
 Kita bisa buat script pada node Himmel dengan isi konfigurasi sebagai berikut:
 ```
 apt-get update -y
@@ -252,9 +250,8 @@ subnet 192.205.3.0 netmask 255.255.255.0 {
 
 ## No. 3
 Soal :
-```
-Client yang melalui Switch4 mendapatkan range IP dari [prefix IP].4.12 - [prefix IP].4.20 dan [prefix IP].4.160 - [prefix IP].4.168
-```
+`Client yang melalui Switch4 mendapatkan range IP dari [prefix IP].4.12 - [prefix IP].4.20 dan [prefix IP].4.160 - [prefix IP].4.168`
+
 Setelah itu kita atur untuk Client yang melalui Switch4.
 ```
 subnet 192.205.4.0 netmask 255.255.255.0 {
@@ -271,9 +268,7 @@ subnet 192.205.4.0 netmask 255.255.255.0 {
 
 ## No. 4
 Soal :
-```
-Client mendapatkan DNS dari Heiter dan dapat terhubung dengan internet melalui DNS tersebut
-```
+`Client mendapatkan DNS dari Heiter dan dapat terhubung dengan internet melalui DNS tersebut`
 
 Untuk melakukan ini, kita bisa mengatur `domain-name-servers` pada Himmel.
 ```
