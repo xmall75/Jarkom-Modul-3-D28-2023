@@ -336,6 +336,60 @@ Dengan `default-lease-time` 720 secs yaitu 12 menit dan `max-lease-time' yaitu 5
 ## No. 6
 Soal :
 
+`Pada masing-masing worker PHP, lakukan konfigurasi virtual host untuk website berikut dengan menggunakan php 7.3.`
+
+Untuk melakukan deployment pertama-tama kita bisa mengunduh hal-hal yg diperlukan oleh worker seperti file web dan php7.3.
+```
+DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y nginx php7.3 php-fpm
+
+apt-get install wget
+apt-get install unzip
+apt-get install htop -y
+
+wget --no-check-certificate "https://drive.google.com/u/0/uc?id=1ViSkRq7SmwZgdK64eRbr5Fm1EGCTPrU1&export=download" -O granz.zip
+mkdir /var/www
+mkdir /var/www/granz.channel.d28.com
+
+unzip -j granz.zip -d /var/www/granz.channel.d28.com
+```
+Setelah persiapan selesai, kita bisa melakukan deployment dengan memasukkan konfigurasi berikut ke dalam masing-masing php worker:
+```
+echo 'server {
+
+ 	listen 8001;
+
+ 	root /var/www/granz.channel.d28.com;
+
+ 	index index.php index.html index.htm;
+ 	server_name _;
+
+ 	location / {
+ 			try_files $uri $uri/ /index.php?$query_string;
+ 	}
+
+ 	# pass PHP scripts to FastCGI server
+ 	location ~ \.php$ {
+ 	include snippets/fastcgi-php.conf;
+ 	fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+ 	}
+
+ location ~ /\.ht {
+ 			deny all;
+ 	}
+
+ 	error_log /var/log/nginx/granz.channel.d28.com_error.log;
+ 	access_log /var/log/nginx/granz.channel.d28.com_access.log;
+ }' > /etc/nginx/sites-available/granz.channel.d28.com
+
+ ln -s /etc/nginx/sites-available/granz.channel.d28.com /etc/nginx/sites-enabled
+
+rm -rf /etc/nginx/sites-enabled/default
+service php7.3-fpm restart
+service php7.3-fpm start
+service php7.3-fpm restart
+service nginx restart
+```
+
 ## No. 7
 Soal :
 
